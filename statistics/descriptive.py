@@ -61,7 +61,11 @@ def median(myArray):
         median = myArray[index]
     
     return median
-    
+  
+
+"""
+Testing section:
+"""  
 array1 = [1,12,7,13,2,5,3]
 
 print(length(array1))

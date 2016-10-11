@@ -5,11 +5,16 @@ import pandas as pd
 import csv
 import urllib2
 
-intcUrl = "http://chart.finance.yahoo.com/table.csv?s=INTC&a=0&b=1&c=2015&d=9&e=10&f=2016&g=d&ignore=.csv"
-amdUrl = "http://chart.finance.yahoo.com/table.csv?s=AMD&a=0&b=1&c=2015&d=9&e=10&f=2016&g=d&ignore=.csv"
-ibmUrl = "http://chart.finance.yahoo.com/table.csv?s=IBM&a=0&b=1&c=2015&d=9&e=10&f=2016&g=d&ignore=.csv"
+def create_url(equity):
+    url = "http://chart.finance.yahoo.com/table.csv?s="
+    url += equity
+    url += "&a=0&b=1&c=2015&d=9&e=10&f=2016&g=d&ignore=.csv"
+    return url
 
-def gather_data(url):
+def gather_data(equity):
+    
+    url = create_url(equity)    
+    
     response = urllib2.urlopen(url)
     cr = csv.reader(response)
     
@@ -34,14 +39,26 @@ def gather_data(url):
     
     return df
 
-intc = gather_data(intcUrl)
+intc = gather_data("INTC")
 intc['Close'].plot(grid=True, title="Intel Corp")
 plt.show()
 
-amd = gather_data(amdUrl)
+amd = gather_data("AMD")
 amd['Close'].plot(grid=True, title="AMD")
 plt.show()
 
-ibm = gather_data(ibmUrl)
+ibm = gather_data("IBM")
 ibm['Close'].plot(grid=True, title="IBM")
+plt.show()
+
+goog = gather_data("GOOG")
+goog['Close'].plot(grid=True, title="Google")
+plt.show()
+
+yhoo = gather_data("YHOO")
+yhoo['Close'].plot(grid=True, title="Yahoo")
+plt.show()
+
+amzn = gather_data("AMZN")
+amzn['Close'].plot(grid=True, title="Amazon")
 plt.show()

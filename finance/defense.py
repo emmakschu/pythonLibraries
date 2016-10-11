@@ -5,7 +5,16 @@ import pandas as pd
 import csv
 import urllib2
 
-def gather_data(url):
+def create_url(equity):
+    url = "http://chart.finance.yahoo.com/table.csv?s="
+    url += equity
+    url += "&a=0&b=1&c=2000&d=9&e=10&f=2016&g=d&ignore=.csv"
+    return url
+
+def gather_data(equity):
+    
+    url = create_url(equity)    
+    
     response = urllib2.urlopen(url)
     cr = csv.reader(response)
     
@@ -30,15 +39,20 @@ def gather_data(url):
     
     return df
 
-rtnUrl = "http://chart.finance.yahoo.com/table.csv?s=RTN&a=0&b=1&c=2000&d=9&e=10&f=2016&g=d&ignore=.csv"
-
-rtn = gather_data(rtnUrl)
+rtn = gather_data("RTN")
 rtn['Close'].plot(label="Raytheon")
 
-baUrl = "http://chart.finance.yahoo.com/table.csv?s=BA&a=0&b=1&c=2000&d=9&e=10&f=2016&g=d&ignore=.csv"
-
-ba = gather_data(baUrl)
+ba = gather_data("BA")
 ba['Close'].plot(label="Boeing")
+
+lmt = gather_data("LMT")
+lmt['Close'].plot(label="Lockheed")
+
+gd = gather_data("GD")
+gd['Close'].plot(label="Gen Dynamics")
+
+noc = gather_data("NOC")
+noc['Close'].plot(label="Northrop Gr")
 
 plt.title("Defense contractors, 1/1/2000 - present")
 plt.grid(True)
